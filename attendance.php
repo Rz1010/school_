@@ -53,7 +53,17 @@ display: none;
 												</select>
 											<span class="text-danger"></span>
 										</div>
-									</div> 									
+									</div> 
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="exampleInputEmail1">Subject</label><small class="req"> *</small>
+											<select id="classid" name="classid" class="form-control" required>
+												<option value="">Select</option>
+												<?php echo $school->subjectLister(); ?>												
+											</select>
+											<span class="text-danger"></span>
+										</div>
+									</div>									
 								</div>
 							</div>
 							<div class="box-footer">
@@ -70,10 +80,10 @@ display: none;
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Reg No</th>
-								<th>Roll No</th>	
+								<th>Reg No</th>	
 								<th>Name</th>
-								<th>Attendance</th>													
+								<th>Attendance</th>
+																					
 							</tr>
 						</thead>
 					</table>

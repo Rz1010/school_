@@ -88,6 +88,30 @@ class School extends Dbconfig {
 		}
 		return $errorMessage; 		
 	}	
+
+	public function teacherLogin(){		
+		$errorMessage = '';
+		if(!empty($_POST["login2"]) && $_POST["email"]!=''&& $_POST["password"]!='') {	
+			$email = $_POST['email'];
+			$password = $_POST['password'];
+			$sqlQuery = "SELECT * FROM ".$this->userTable." WHERE email='".$email."' AND password='".md5($password)."' AND status = 'active' AND type = 'general'";
+			$resultSet = mysqli_query($this->dbConnect, $sqlQuery) or die("error".mysql_error());
+			$isValidLogin = mysqli_num_rows($resultSet);	
+			if($isValidLogin){
+				$userDetails = mysqli_fetch_assoc($resultSet);
+				$_SESSION["adminUserid"] = $userDetails['id'];
+				$_SESSION["admin"] = $userDetails['first_name']." ".$userDetails['last_name'];
+				header("location: dashboard2.php"); 		
+			} else {		
+				$errorMessage = "Invalid login!";		 
+			}
+		} else if(!empty($_POST["login"])){
+			$errorMessage = "Enter Both user and password!";	
+		}
+		return $errorMessage; 		
+	}
+
+
 	public function listClasses(){		
 		$sqlQuery = "SELECT c.id, c.name, s.section, t.teacher 
 			FROM ".$this->classesTable." as c
@@ -268,6 +292,18 @@ class School extends Dbconfig {
 		}
 		return $classHTML;
 	}
+
+public function subjectLister(){		
+		$sqlQuery = "SELECT * FROM ".$this->subjectsTable;	
+		$result = mysqli_query($this->dbConnect, $sqlQuery);	
+		$classHTML = '';
+		while( $class = mysqli_fetch_assoc($result)) {
+			$classHTML .= '<option value="'.$class["id"].'">'.$class["subject"].'</option>';	
+		}
+		return $classHTML;
+	}
+
+
 	/*****************Section methods****************/
 	public function listSections(){		
 		$sqlQuery = "SELECT s.section_id, s.section 
