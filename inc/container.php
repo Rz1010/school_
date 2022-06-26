@@ -10,11 +10,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="https://www.webdamn.com" class="navbar-brand">LearnAll.org</a>
+          <a href="https://learnall.org" class="navbar-brand">LearnAll.org</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="https://www.webdamn.com">Home</a></li>
+            <li class="active"><a href="https://learnall.org">Home</a></li>
            
           </ul>
          
