@@ -1,14 +1,14 @@
 <?php 
 include('class/School.php');
 $school = new School();
-$school->adminLoginStatus();
+$school->teacherLoginStatus();
 include('inc/header.php');
 ?>
 <title>LearnAll.org</title>
 <?php include('include_files.php');?>
 <?php include('inc/container.php');?>
 <div class="container">	
-	<?php include('side-menu.php');	?>
+	<?php include('side-menu2.php');	?>
 	<div class="content">
 		<div class="container-fluid">    			
 			<div class="alert alert-success fade in">
@@ -72,7 +72,32 @@ include('inc/header.php');
 			</div><!--row ends-->
 			<!--row begins-->
 				<div class="row">
-				
+				<div class="col-lg-3 col-sm-6">
+					<div class="card">
+						<div class="content">
+							<div class="row">
+								<div class="col-xs-5">
+									<div class="icon-big icon-warning text-center">
+										<i class="ti-harddrives"></i>
+									</div>
+								</div>
+								<div class="col-xs-7">
+									<div class="numbers">
+										<p><strong>Subjects</strong></p>									   
+									</div>
+								</div>
+							</div>
+							<a href="subjects.php">
+								<div class="footer">
+								<hr />
+								<div class="stats">
+									<i class="ti-arrow-right"></i>View
+								</div>
+							</div>
+						</a>
+						</div>
+					</div>
+				</div>
 				<div class="col-lg-3 col-sm-6">
 					<div class="card">
 						<div class="content">

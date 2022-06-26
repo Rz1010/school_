@@ -59,6 +59,12 @@ class School extends Dbconfig {
 			header("Location: index.php");
 		}
 	}
+	public function teacherLoginStatus (){
+		if(empty($_SESSION["teacherUserid"])) {
+			header("Location: index.php");
+		}
+	}
+
 	public function isLoggedin (){
 		if(!empty($_SESSION["adminUserid"])) {	
 			return true;
@@ -99,8 +105,8 @@ class School extends Dbconfig {
 			$isValidLogin = mysqli_num_rows($resultSet);	
 			if($isValidLogin){
 				$userDetails = mysqli_fetch_assoc($resultSet);
-				$_SESSION["adminUserid"] = $userDetails['id'];
-				$_SESSION["admin"] = $userDetails['first_name']." ".$userDetails['last_name'];
+				$_SESSION["teacherUserid"] = $userDetails['id'];
+				$_SESSION["teacher"] = $userDetails['first_name']." ".$userDetails['last_name'];
 				header("location: dashboard2.php"); 		
 			} else {		
 				$errorMessage = "Invalid login!";		 
