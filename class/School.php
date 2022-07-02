@@ -387,11 +387,8 @@ public function subjectLister(){
 	}
 	/*****************Section methods****************/
 	public function listTeacher(){		
-		$sqlQuery = "SELECT t.teacher_id, t.teacher,t.tnumb, s.subject, c.name, se.section			
-			FROM ".$this->teacherTable." as t 
-			LEFT JOIN ".$this->subjectsTable." as s ON t.subject_id = s.subject_id
-			LEFT JOIN ".$this->classesTable." as c ON t.teacher_id = c.teacher_id
-			LEFT JOIN ".$this->sectionsTable." as se ON c.section = se.section_id ";
+		$sqlQuery = "SELECT t.teacher_id, t.teacher,t.tnumb			
+			FROM ".$this->teacherTable." as t ";
 		if(!empty($_POST["search"]["value"])){
 			$sqlQuery .= ' WHERE (t.teacher_id LIKE "%'.$_POST["search"]["value"].'%" ';
 			$sqlQuery .= ' OR t.teacher LIKE "%'.$_POST["search"]["value"].'%" ';					
@@ -411,10 +408,8 @@ public function subjectLister(){
 			$teacherRows = array();			
 			$teacherRows[] = $teacher['teacher_id'];
 			$teacherRows[] = $teacher['teacher'];
-			$teacherRows[] = $teacher['tnumb'];
-			$teacherRows[] = $teacher['subject'];
-			$teacherRows[] = $teacher['name'];	
-			$teacherRows[] = $teacher['section'];				
+			$teacherRows[] = $teacher['tnumb'];	
+						
 			$teacherRows[] = '<button type="button" name="update" id="'.$teacher["teacher_id"].'" class="btn btn-warning btn-xs update">Update</button>';
 			$teacherRows[] = '<button type="button" name="delete" id="'.$teacher["teacher_id"].'" class="btn btn-danger btn-xs delete" >Delete</button>';
 			$teacherData[] = $teacherRows;

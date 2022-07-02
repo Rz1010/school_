@@ -33,10 +33,7 @@ include('inc/header.php');
 						<tr>
 							<th>ID</th>
 							<th>Name</th>
-							<th>Phone</th>
-							<th>Assigned Subjects</th>	
-							<th>Class</th>	
-							<th>Sections</th>								
+							<th>Phone</th>								
 							<th></th>
 							<th></th>							
 						</tr>

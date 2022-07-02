@@ -12,7 +12,7 @@ $(document).ready(function(){
 		},
 		"columnDefs":[
 			{
-				"targets":[0,6,7],
+				"targets":[0,3,4],
 				"orderable":false,
 			},
 		],
