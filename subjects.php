@@ -17,6 +17,7 @@ include('inc/header.php');
 		<div class="container-fluid">
 			<div>   
 				<a href="#"><strong><span class="ti-crown"></span> Subjects Section</strong></a>
+
 				<hr>		
 				<div class="panel-heading">
 					<div class="row">
@@ -32,9 +33,10 @@ include('inc/header.php');
 					<thead>
 						<tr>
 							<th>ID</th>
-							<th>Subject</th>	
+							<th>Subject</th>
+								
 							<th>Code</th>
-							<th>Subject Type</th>							
+							<th>Assigned Section</th>							
 							<th></th>
 							<th></th>							
 						</tr>
@@ -55,21 +57,17 @@ include('inc/header.php');
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="teacher" class="control-label">Class Name*</label>
+						<label for="teacher" class="control-label">Subject Name*</label>
 						<input type="text" class="form-control" id="subject" name="subject" placeholder="Subject Name" required>					
 					</div>	
-					<div class="form-group">
-						<label for="s_type" class="control-label">Subject Type</label><br>							
-						<label class="radio-inline">
-							<input type="radio" name="s_type" id="theory" value="Theory" required>Theory
-						</label>;
-						<label class="radio-inline">
-							<input type="radio" name="s_type" id="practical" value="Practical" required>Practical
-						</label>							
-					</div>	
+					
 					<div class="form-group">
 						<label for="code" class="control-label">Code*</label>
 						<input type="text" class="form-control" id="code" name="code" placeholder="code..." required>					
+					</div>
+					<div class="form-group">
+						<label for="section" class="control-label">Section*</label>
+						<input type="text" class="form-control" id="section" name="section" placeholder="Section" required>					
 					</div>
 				</div>
 				<div class="modal-footer">

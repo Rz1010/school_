@@ -1,8 +1,8 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-ini_set('display_errors', '1');
-
 
 session_start();
 require('config.php');
@@ -119,24 +119,20 @@ class School extends Dbconfig {
 
 
 	public function listClasses(){		
-		$sqlQuery = "SELECT c.id, c.name, s.section, t.teacher 
-			FROM ".$this->classesTable." as c
-			LEFT JOIN ".$this->sectionsTable." as s ON c.section = s.section_id
-			LEFT JOIN ".$this->teacherTable." as t ON c.teacher_id = t.teacher_id ";
+		$sqlQuery = "SELECT c.id, c.name
+			FROM ".$this->classesTable." as c";
 		if(!empty($_POST["search"]["value"])){
 			$sqlQuery .= ' WHERE (c.id LIKE "%'.$_POST["search"]["value"].'%" ';
-			$sqlQuery .= ' OR c.name LIKE "%'.$_POST["search"]["value"].'%" ';	
-			$sqlQuery .= ' OR s.section LIKE "%'.$_POST["search"]["value"].'%" ';
-			$sqlQuery .= ' OR t.teacher LIKE "%'.$_POST["search"]["value"].'%" ';				
+			$sqlQuery .= ' OR c.name LIKE "%'.$_POST["search"]["value"].'%" ';				
 		}
-		if(!empty($_POST["order"])){
+		/*if(!empty($_POST["order"])){
 			$sqlQuery .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
 		} else {
 			$sqlQuery .= 'ORDER BY c.id DESC ';
 		}
 		if($_POST["length"] != -1){
 			$sqlQuery .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
-		}	
+		}*/	
 		$result = mysqli_query($this->dbConnect, $sqlQuery);
 		$numRows = mysqli_num_rows($result);
 		$classesData = array();	
@@ -144,8 +140,6 @@ class School extends Dbconfig {
 			$classesRows = array();			
 			$classesRows[] = $classes['id'];
 			$classesRows[] = $classes['name'];	
-			$classesRows[] = $classes['section'];	
-			$classesRows[] = $classes['teacher'];	
 			$classesRows[] = '<button type="button" name="update" id="'.$classes["id"].'" class="btn btn-warning btn-xs update">Update</button>';
 			$classesRows[] = '<button type="button" name="delete" id="'.$classes["id"].'" class="btn btn-danger btn-xs delete" >Delete</button>';
 			$classesData[] = $classesRows;
@@ -193,10 +187,8 @@ class School extends Dbconfig {
 	}
 	/*****************Student methods****************/
 	public function listStudent(){		
-		$sqlQuery = "SELECT s.id, s.name, s.photo, s.gender, s.dob, s.mobile, s.email, s.current_address, s.father_name, s.mother_name,s.admission_no, s.roll_no, s.admission_date, s.academic_year, c.name as class, se.section 
-			FROM ".$this->studentTable." as s
-			LEFT JOIN ".$this->classesTable." as c ON s.class = c.id
-			LEFT JOIN ".$this->sectionsTable." as se ON s.section = se.section_id ";
+		$sqlQuery = "SELECT s.id, s.name, s.photo, s.gender, s.dob, s.mobile, s.email, s.current_address, s.father_name, s.mother_name,s.admission_no, s.roll_no, s.admission_date, s.academic_year
+			FROM ".$this->studentTable." as s";
 		if(!empty($_POST["search"]["value"])){
 			$sqlQuery .= ' WHERE (s.id LIKE "%'.$_POST["search"]["value"].'%" ';
 			$sqlQuery .= ' OR s.name LIKE "%'.$_POST["search"]["value"].'%" ';
@@ -205,14 +197,15 @@ class School extends Dbconfig {
 			$sqlQuery .= ' OR s.admission_no LIKE "%'.$_POST["search"]["value"].'%" ';	
 			$sqlQuery .= ' OR s.roll_no LIKE "%'.$_POST["search"]["value"].'%" ';			
 		}
-		if(!empty($_POST["order"])){
+		/*if(!empty($_POST["order"])){
 			$sqlQuery .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
 		} else {
 			$sqlQuery .= 'ORDER BY s.id DESC ';
 		}
 		if($_POST["length"] != -1){
 			$sqlQuery .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
-		}	
+		}*/ 
+		//fix here with search	
 		$result = mysqli_query($this->dbConnect, $sqlQuery);
 		$numRows = mysqli_num_rows($result);
 		$studentData = array();	
@@ -220,11 +213,8 @@ class School extends Dbconfig {
 			$studentRows = array();			
 			$studentRows[] = $student['id'];
 			$studentRows[] = $student['admission_no'];
-			$studentRows[] = $student['roll_no'];
 			$studentRows[] = $student['name'];	
-			$studentRows[] = "<img width='40' height='40' src='upload/".$student['photo']."'>";
-			$studentRows[] = $student['class'];
-			$studentRows[] = $student['section'];		
+			$studentRows[] = "<img width='40' height='40' src='upload/".$student['photo']."'>";	
 			$studentRows[] = '<button type="button" name="update" id="'.$student["id"].'" class="btn btn-warning btn-xs update">Update</button>';
 			$studentRows[] = '<button type="button" name="delete" id="'.$student["id"].'" class="btn btn-danger btn-xs delete" >Delete</button>';
 			$studentData[] = $studentRows;
@@ -247,13 +237,13 @@ class School extends Dbconfig {
 			} else {
 				echo "Sorry, there was an error uploading your file.";
 			}					
-			$insertQuery = "INSERT INTO ".$this->studentTable."(name, email, mobile, gender, current_address, father_name, mother_name, class, section, admission_no, roll_no, academic_year, admission_date, dob, photo) 
+			$insertQuery = "INSERT INTO ".$this->studentTable."(name, email, mobile, gender, current_address, father_name, mother_name, admission_no, roll_no, academic_year, admission_date, dob, photo) 
 				VALUES ('".$_POST["sname"]."', '".$_POST["email"]."', '".$_POST["mobile"]."', '".$_POST["gender"]."', '".$_POST["address"]."', '".$_POST["fname"]."', '".$_POST["mname"]."', '".$_POST["classid"]."', '".$_POST["sectionid"]."', '".$_POST["registerNo"]."', '".$_POST["rollNo"]."', '".$_POST["year"]."', '".$_POST["admission_date"]."', '".$_POST["dob"]."', '".$fileName."')";
 			$userSaved = mysqli_query($this->dbConnect, $insertQuery);
 		}
 	}
 	public function getStudentDetails(){
-		$sqlQuery = "SELECT s.id, s.name, s.photo, s.gender, s.dob, s.mobile, s.email, s.current_address, s.father_name, s.mother_name,s.admission_no, s.roll_no, s.admission_date, s.academic_year, s.class, s.section 
+		$sqlQuery = "SELECT s.id, s.name, s.photo, s.gender, s.dob, s.mobile, s.email, s.current_address, s.father_name, s.mother_name,s.admission_no, s.roll_no, s.admission_date, s.academic_year
 			FROM ".$this->studentTable." as s
 			LEFT JOIN ".$this->classesTable." as c ON s.class = c.id 
 			WHERE s.id = '".$_POST["studentid"]."'";		
@@ -312,9 +302,10 @@ public function subjectLister(){
 
 	/*****************Section methods****************/
 	public function listSections(){		
-		$sqlQuery = "SELECT s.section_id, s.section 
-			FROM ".$this->sectionsTable." as s ";
-		if(!empty($_POST["search"]["value"])){
+		$sqlQuery = "SELECT s.section_id, s.section , s.assigned_teacher_id , t.teacher_id, t.teacher
+			FROM ".$this->sectionsTable." as s 
+			LEFT JOIN ".$this->teacherTable." as t ON s.assigned_teacher_id = t.teacher_id ";
+		/*if(!empty($_POST["search"]["value"])){
 			$sqlQuery .= ' WHERE (s.section_id LIKE "%'.$_POST["search"]["value"].'%" ';
 			$sqlQuery .= ' OR s.section LIKE "%'.$_POST["search"]["value"].'%" ';					
 		}
@@ -325,14 +316,15 @@ public function subjectLister(){
 		}
 		if($_POST["length"] != -1){
 			$sqlQuery .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
-		}	
+		}*/
 		$result = mysqli_query($this->dbConnect, $sqlQuery);
 		$numRows = mysqli_num_rows($result);
 		$sectionData = array();	
 		while( $section = mysqli_fetch_assoc($result) ) {		
 			$sectionRows = array();			
 			$sectionRows[] = $section['section_id'];
-			$sectionRows[] = $section['section'];				
+			$sectionRows[] = $section['section'];	
+			$sectionRows[] = $section['teacher'];				
 			$sectionRows[] = '<button type="button" name="update" id="'.$section["section_id"].'" class="btn btn-warning btn-xs update">Update</button>';
 			$sectionRows[] = '<button type="button" name="delete" id="'.$section["section_id"].'" class="btn btn-danger btn-xs delete" >Delete</button>';
 			$sectionData[] = $sectionRows;
@@ -455,8 +447,9 @@ public function subjectLister(){
 	}
 	/*****************Subject methods****************/
 	public function listSubject(){		
-		$sqlQuery = "SELECT subject_id, subject, type, code 
-			FROM ".$this->subjectsTable." ";
+		$sqlQuery = "SELECT se.subject_id, se.subject, se.code, s.section , s.section_id
+			FROM ".$this->subjectsTable." as se
+			LEFT JOIN ".$this->sectionsTable." as s ON s.section_id = se.section_id ";
 		if(!empty($_POST["search"]["value"])){
 			$sqlQuery .= ' WHERE (subject_id LIKE "%'.$_POST["search"]["value"].'%" ';
 			$sqlQuery .= ' OR subject LIKE "%'.$_POST["search"]["value"].'%" ';	
@@ -479,7 +472,7 @@ public function subjectLister(){
 			$subjectRows[] = $subject['subject_id'];
 			$subjectRows[] = $subject['subject'];	
 			$subjectRows[] = $subject['code'];	
-			$subjectRows[] = $subject['type'];				
+			$subjectRows[] = $subject['section'];				
 			$subjectRows[] = '<button type="button" name="update" id="'.$subject["subject_id"].'" class="btn btn-warning btn-xs update">Update</button>';
 			$subjectRows[] = '<button type="button" name="delete" id="'.$subject["subject_id"].'" class="btn btn-danger btn-xs delete" >Delete</button>';
 			$subjectData[] = $subjectRows;
@@ -494,8 +487,8 @@ public function subjectLister(){
 	}
 	public function addSubject () {
 		if($_POST["subject"]) {
-			$insertQuery = "INSERT INTO ".$this->subjectsTable."(subject, type, code) 
-				VALUES ('".$_POST["subject"]."', '".$_POST["s_type"]."', '".$_POST["code"]."')";
+			$insertQuery = "INSERT INTO ".$this->subjectsTable."(subject, code,section_id) 
+				VALUES ('".$_POST["subject"]."', '".$_POST["code"]."', '".$_POST["section"]."')";
 			$userSaved = mysqli_query($this->dbConnect, $insertQuery);
 		}
 	}

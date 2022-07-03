@@ -3,6 +3,7 @@ $(document).ready(function(){
 		"lengthChange": false,
 		"processing":true,
 		"serverSide":true,
+
 		"order":[],
 		"ajax":{
 			url:"action.php",
@@ -12,7 +13,7 @@ $(document).ready(function(){
 		},
 		"columnDefs":[
 			{
-				"targets":[0, 2, 3],
+				"targets":[0,3,4],
 				"orderable":false,
 			},
 		],
@@ -22,7 +23,7 @@ $(document).ready(function(){
 	$('#addSection').click(function(){
 		$('#sectionModal').modal('show');
 		$('#sectionForm')[0].reset();		
-		$('.modal-title').html("<i class='fa fa-plus'></i> Add SEction");
+		$('.modal-title').html("<i class='fa fa-plus'></i> Add Section");
 		$('#action').val('addSection');
 		$('#save').val('Save');
 	});	

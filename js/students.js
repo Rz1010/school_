@@ -12,7 +12,7 @@ $(document).ready(function(){
 		},
 		"columnDefs":[
 			{
-				"targets":[0, 7, 8],
+				"targets":[0,4,5],
 				"orderable":false,
 			},
 		],
@@ -68,8 +68,6 @@ $(document).ready(function(){
 				$('#rollNo').val(data.roll_no);
 				$('#year').val(data.academic_year);
 				$('#admission_date').val(data.admission_date);
-				$('#classid').val(data.class);
-				$('#sectionid').val(data.section);
 				$('#email').val(data.email);
 				$('#address').val(data.current_address);
 				$('#fname').val(data.father_name);

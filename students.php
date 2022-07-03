@@ -32,13 +32,9 @@ include('inc/header.php');
 					<thead>
 						<tr>
 							<th>ID</th>
-							<th>Reg No</th>
-							<th>Roll No</th>	
+							<th>Reg No</th>	
 							<th>Name</th>
-							<th>Photo</th>	
-							<th>Class</th>
-							<th>Section</th>				
-								
+							<th>Photo</th>						
 							<th></th>
 							<th></th>							
 						</tr>

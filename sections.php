@@ -32,7 +32,8 @@ include('inc/header.php');
 					<thead>
 						<tr>
 							<th>ID</th>
-							<th>Name</th>											
+							<th>Name</th>
+							<th>Assigned Teacher</th>										
 							<th></th>
 							<th></th>							
 						</tr>
@@ -54,7 +55,14 @@ include('inc/header.php');
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="firstname" class="control-label">Section Name*</label>
-						<input type="text" class="form-control" id="section_name" name="section_name" placeholder="SEction Name" required>							
+						<input type="text" class="form-control" id="section_name" name="section_name" placeholder="Section Name" required>							
+					</div>	
+					<div class="form-group">
+						<label for="mname" class="control-label">Assign Class Teacher*</label>	
+						<select name="teacherid" id="teacherid" class="form-control" required>
+							<option value="">Select</option>
+							<?php echo $school->getTeacherList(); ?>
+						</select>
 					</div>									
 				</div>
 				<div class="modal-footer">

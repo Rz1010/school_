@@ -1,6 +1,10 @@
 $(document).ready(function(){
+	
+	
 	var subjectData = $('#subjectList').DataTable({
-		"lengthChange": false,
+
+
+	"lengthChange": false,
 		"processing":true,
 		"serverSide":true,
 		"order":[],
@@ -12,12 +16,21 @@ $(document).ready(function(){
 		},
 		"columnDefs":[
 			{
-				"targets":[0, 4, 5],
+				"targets":[0, 1, 3],
 				"orderable":false,
 			},
 		],
+		
+		
 		"pageLength": 10
 	});	
+
+	$('cl3search').on( 'keyup', function () {
+    subjectData
+        .columns( 2 )
+        .search( this.value )
+        .draw();
+} );
 
 	$('#addSubject').click(function(){
 		$('#subjectModal').modal('show');

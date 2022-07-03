@@ -13,7 +13,7 @@ $(document).ready(function(){
 		},
 		"columnDefs":[
 			{
-				"targets":[0, 4, 5],
+				"targets":[0, 1, 2],
 				"orderable":false,
 			},
 		],
@@ -56,9 +56,7 @@ $(document).ready(function(){
 			success:function(data){
 				$('#classModal').modal('show');
 				$('#classid').val(data.id);
-				$('#cname').val(data.name);
-				$('#sectionid').val(data.section_id);
-				$('#teacherid').val(data.teacher_id);				
+				$('#cname').val(data.name);		
 				$('.modal-title').html("<i class='fa fa-plus'></i> Edit Class");
 				$('#action').val('updateClass');
 				$('#save').val('Save');

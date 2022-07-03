@@ -32,9 +32,7 @@ include('inc/header.php');
 					<thead>
 						<tr>
 							<th>ID</th>
-							<th>Name</th>	
-							<th>Sections</th>
-							<th>Class Teacher</th>							
+							<th>Name</th>							
 							<th></th>
 							<th></th>							
 						</tr>
@@ -58,20 +56,8 @@ include('inc/header.php');
 						<label for="firstname" class="control-label">Class Name*</label>
 						<input type="text" class="form-control" id="cname" name="cname" placeholder="Class Name" required>					
 					</div>	
-					<div class="form-group">
-						<label for="mname" class="control-label">Sections*</label>	
-						<select name="sectionid" id="sectionid" class="form-control" required>
-							<option value="">Select Section</option>
-							<?php echo $school->getSectionList(); ?>
-						</select>
-					</div>	
-					<div class="form-group">
-						<label for="mname" class="control-label">Assign Class Teacher*</label>	
-						<select name="teacherid" id="teacherid" class="form-control" required>
-							<option value="">Select</option>
-							<?php echo $school->getTeacherList(); ?>
-						</select>
-					</div>		
+					
+						
 				</div>
 				<div class="modal-footer">
 					<input type="hidden" name="classid" id="classid" />
