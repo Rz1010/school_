@@ -18,6 +18,7 @@ class School extends Dbconfig {
 	private $teacherTable = 'sms_teacher';
 	private $subjectsTable = 'sms_subjects';
 	private $attendanceTable = 'sms_attendance';
+	private $enrolls_in='enrolls_in';
 	private $dbConnect = false;
     public function __construct(){
         if(!$this->dbConnect){ 		
@@ -227,6 +228,52 @@ class School extends Dbconfig {
 		);
 		echo json_encode($output);
 	}
+	
+	public function listStudentSpecial(){	
+		$id = $_SESSION["teacherUserid"];
+		$sqlQuery1 = "SELECT section_id FROM ".$this->sectionsTable." where assigned_teacher_id=".$id;	
+		$sqlQuery2 = "Select student_id from ".$this->enrolls_in." where section_id in (".$sqlQuery1.")";
+		$sqlQuery = "SELECT s.id, s.name, s.photo, s.gender, s.dob, s.mobile, s.email, s.current_address, s.father_name, s.mother_name,s.admission_no, s.roll_no, s.admission_date, s.academic_year
+			FROM ".$this->studentTable." as s where s.id in (".$sqlQuery2.")";
+		if(!empty($_POST["search"]["value"])){
+			$sqlQuery .= ' WHERE (s.id LIKE "%'.$_POST["search"]["value"].'%" ';
+			$sqlQuery .= ' OR s.name LIKE "%'.$_POST["search"]["value"].'%" ';
+			$sqlQuery .= ' OR s.gender LIKE "%'.$_POST["search"]["value"].'%" ';		
+			$sqlQuery .= ' OR s.mobile LIKE "%'.$_POST["search"]["value"].'%" ';		
+			$sqlQuery .= ' OR s.admission_no LIKE "%'.$_POST["search"]["value"].'%" ';	
+			$sqlQuery .= ' OR s.roll_no LIKE "%'.$_POST["search"]["value"].'%" ';			
+		}
+		/*if(!empty($_POST["order"])){
+			$sqlQuery .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
+		} else {
+			$sqlQuery .= 'ORDER BY s.id DESC ';
+		}
+		if($_POST["length"] != -1){
+			$sqlQuery .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+		}*/ 
+		//fix here with search	
+		$result = mysqli_query($this->dbConnect, $sqlQuery);
+		$numRows = mysqli_num_rows($result);
+		$studentData = array();	
+		while( $student = mysqli_fetch_assoc($result) ) {		
+			$studentRows = array();			
+			$studentRows[] = $student['id'];
+			$studentRows[] = $student['admission_no'];
+			$studentRows[] = $student['name'];	
+			$studentRows[] = "<img width='40' height='40' src='upload/".$student['photo']."'>";	
+			$studentRows[] = '<button type="button" name="update" id="'.$student["id"].'" class="btn btn-warning btn-xs update">Update</button>';
+			$studentRows[] = '<button type="button" name="delete" id="'.$student["id"].'" class="btn btn-danger btn-xs delete" >Delete</button>';
+			$studentData[] = $studentRows;
+		}
+		$output = array(
+			"draw"				=>	intval($_POST["draw"]),
+			"recordsTotal"  	=>  $numRows,
+			"recordsFiltered" 	=> 	$numRows,
+			"data"    			=> 	$studentData
+		);
+		echo json_encode($output);
+	}
+
 	public function addStudent () {
 		if($_POST["sname"]) {			
 			$target_dir = "upload/";

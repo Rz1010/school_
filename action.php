@@ -20,6 +20,9 @@ if(!empty($_POST['action']) && $_POST['action'] == 'deleteClass') {
 if(!empty($_POST['action']) && $_POST['action'] == 'listStudent') {
 	$school->listStudent();
 }
+if(!empty($_POST['action']) && $_POST['action'] == 'listStudentSpecial') {
+	$school->listStudentSpecial();
+}
 if(!empty($_POST['action']) && $_POST['action'] == 'addStudent') {
 	$school->addStudent();
 }

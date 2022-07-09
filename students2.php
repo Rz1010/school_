@@ -9,7 +9,7 @@ include('inc/header.php');
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/dataTables.bootstrap.min.js"></script>		
 <link rel="stylesheet" href="css/dataTables.bootstrap.min.css" />
-<script src="js/students.js"></script>
+<script src="js/students2.js"></script>
 <?php include('inc/container.php');?>
 <div class="container">	
 	<?php include('side-menu2.php');	?>
