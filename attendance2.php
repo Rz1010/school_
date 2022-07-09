@@ -1,7 +1,7 @@
 <?php 
 include('class/School.php');
 $school = new School();
-$school->adminLoginStatus();
+$school->teacherLoginStatus();
 include('inc/header.php');
 ?>
 <title>LearnAll.org</title>
@@ -17,7 +17,7 @@ display: none;
 </style>
 <?php include('inc/container.php');?>
 <div class="container">	
-	<?php include('side-menu.php');	?>
+	<?php include('side-menu2.php');	?>
 	<div class="content">
 		<div class="container-fluid">
 			<strong>Student Attendance Section <br>
@@ -49,7 +49,7 @@ display: none;
 											<label for="exampleInputEmail1">Section</label><small class="req"> *</small>
 												<select name="sectionid" id="sectionid" class="form-control" required>
 													<option value="">Select</option>
-													<?php echo $school->getSectionList(); ?>
+													<?php echo $school->getSectionListSpecial(); ?>
 												</select>
 											<span class="text-danger"></span>
 										</div>
@@ -57,9 +57,9 @@ display: none;
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Subject</label><small class="req"> *</small>
-											<select id="subjectid" name="subjectid" class="form-control" required>
+											<select id="classid" name="subjectid" class="form-control" required>
 												<option value="">Select</option>
-												<?php echo $school->subjectLister(); ?>												
+												<?php echo $school->subjectListerSpecial(); ?>												
 											</select>
 											<span class="text-danger"></span>
 										</div>

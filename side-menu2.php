@@ -14,32 +14,32 @@
                     </a>
                 </li>
                 <li id="students">
-                    <a href="students.php" class="menu-link">
+                    <a href="students2.php" class="menu-link">
                         <i class="ti-user"></i>
                         <p>Student</p>
                     </a>
                 </li>
                 <li id="classes">
-                    <a href="classes.php" class="menu-link">
+                    <a href="classes2.php" class="menu-link">
                         <i class="ti-crown"></i>
                         <p>Classes</p>
                     </a>
                 </li>
 				<li id="sections">
-                    <a href="sections.php" class="menu-link">
+                    <a href="sections2.php" class="menu-link">
                         <i class="ti-crown"></i>
                         <p>Sections</p>
                     </a>
                 </li>
                 
 				<li id="subjects">
-                    <a href="subjects.php" class="menu-link">
+                    <a href="subjects2.php" class="menu-link">
                         <i class="ti-home"></i>
                         <p>Subjects</p>
                     </a>
                 </li>
 				<li id="attendance">
-                    <a href="attendance.php" class="menu-link">
+                    <a href="attendance2.php" class="menu-link">
                         <i class="ti-bar-chart-alt"></i>
                         <p>Attendance</p>
                     </a>

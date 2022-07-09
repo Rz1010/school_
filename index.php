@@ -10,6 +10,9 @@ include('class/School.php');
 if(!empty($_SESSION["adminUserid"])) {	
 	header("location: dashboard.php"); 	
 }
+if(!empty($_SESSION["teacherUserid"])) {	
+	header("location: dashboard2.php"); 	
+}
 $school = new School();
 $errorMessage1 =  $school->adminLogin();
 $errorMessage2 =  $school->teacherLogin();

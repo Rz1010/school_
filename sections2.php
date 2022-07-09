@@ -1,7 +1,7 @@
 <?php 
 include('class/School.php');
 $school = new School();
-$school->adminLoginStatus();
+$school->teacherLoginStatus();
 include('inc/header.php');
 ?>
 <title>LearnAll.org</title>

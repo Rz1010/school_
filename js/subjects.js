@@ -25,12 +25,7 @@ $(document).ready(function(){
 		"pageLength": 10
 	});	
 
-	$('cl3search').on( 'keyup', function () {
-    subjectData
-        .columns( 2 )
-        .search( this.value )
-        .draw();
-} );
+
 
 	$('#addSubject').click(function(){
 		$('#subjectModal').modal('show');

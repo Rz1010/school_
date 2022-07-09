@@ -289,7 +289,7 @@ class School extends Dbconfig {
 		return $classHTML;
 	}
 
-public function subjectLister(){		
+	public function subjectLister(){		
 		$sqlQuery = "SELECT * FROM ".$this->subjectsTable;	
 		$result = mysqli_query($this->dbConnect, $sqlQuery);	
 		$classHTML = '';
@@ -299,6 +299,17 @@ public function subjectLister(){
 		return $classHTML;
 	}
 
+	public function subjectListerSpecial(){	
+		$id2 = $_SESSION["teacherUserid"];
+		$sqlQuery="Select * from ".$this->subjectsTable." as s, ".$this->sectionsTable." as se where se.assigned_teacher_id=".$id2." and se.section_id=s.section_id"; 
+		$result = mysqli_query($this->dbConnect, $sqlQuery);	
+		$classHTML = '';
+		while( $class = mysqli_fetch_assoc($result)) {
+			$classHTML .= '<option value="'.$class["id"].'">'.$class["subject"].'</option>';	
+		}
+		
+		return $classHTML;
+	}
 
 	/*****************Section methods****************/
 	public function listSections(){		
@@ -375,6 +386,17 @@ public function subjectLister(){
 		while( $section = mysqli_fetch_assoc($result)) {
 			$sectionHTML .= '<option value="'.$section["section_id"].'">'.$section["section"].'</option>';	
 		}
+		return $sectionHTML;
+	}
+	public function getSectionListSpecial(){
+		$id = $_SESSION["teacherUserid"];
+		$sqlQuery = "SELECT * FROM ".$this->sectionsTable." where assigned_teacher_id=".$id;
+		$result = mysqli_query($this->dbConnect, $sqlQuery);	
+		$sectionHTML = '';
+		while( $section = mysqli_fetch_assoc($result)) {
+			$sectionHTML .= '<option value="'.$section["section_id"].'">'.$section["section"].'</option>';	
+		}
+		
 		return $sectionHTML;
 	}
 	/*****************Section methods****************/

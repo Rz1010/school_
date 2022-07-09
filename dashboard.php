@@ -4,6 +4,7 @@ $school = new School();
 $school->adminLoginStatus();
 include('inc/header.php');
 ?>
+
 <title>LearnAll.org</title>
 <?php include('include_files.php');?>
 <?php include('inc/container.php');?>

@@ -7,6 +7,7 @@ $(document).ready(function(){
 		}
 		var classid = $('#classid').val();
 		var sectionid = $('#sectionid').val();
+		var subjectid = $('#subjectid').val();
 		if(classid && sectionid) {
 			$.ajax({
 				url:"action.php",
