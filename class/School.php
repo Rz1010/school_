@@ -698,12 +698,14 @@ class School extends Dbconfig {
 				$query = "AND a.attendance_date = '".$attendanceDate."'";
 			}
 		
-			$sqlQuery = "SELECT s.id, s.name, s.photo, s.gender, s.dob, s.mobile, s.email, s.current_address, s.father_name, s.mother_name,s.admission_no, s.roll_no, s.admission_date, s.academic_year, a.attendance_status, a.attendance_date
+			$sqlQuery = "SELECT s.id, s.name, s.photo, s.gender, s.dob, s.mobile, s.email, s.current_address, s.father_name, s.mother_name,s.admission_no, s.roll_no, s.admission_date, s.academic_year, a.attendance_status, a.attendance_date,w.student_id,w.section_id,se.section_id,se.class_id
 				FROM ".$this->studentTable." as s
 				LEFT JOIN ".$this->attendanceTable." as a ON s.id = a.student_id
-				WHERE s.class = '".$_POST["classid"]."' AND s.section='".$_POST["sectionid"]."' $query ";
+				LEFT JOIN ".$this->enrolls_in." as w ON s.id = w.student_id
+				LEFT JOIN ".$this->sectionsTable." as se ON w.section_id = se.section_id
+				WHERE se.class_id = '".$_POST["classid"]."' AND w.section_id='".$_POST["sectionid"]."' $query ";
 			$sqlQuery .= "GROUP BY a.student_id ";	
-			if(!empty($_POST["search"]["value"])){
+			/*if(!empty($_POST["search"]["value"])){
 				$sqlQuery .= ' AND (s.id LIKE "%'.$_POST["search"]["value"].'%" ';
 				$sqlQuery .= ' OR s.name LIKE "%'.$_POST["search"]["value"].'%" ';
 				$sqlQuery .= ' OR s.admission_no LIKE "%'.$_POST["search"]["value"].'%" ';	
@@ -716,7 +718,7 @@ class School extends Dbconfig {
 			}
 			if($_POST["length"] != -1){
 				$sqlQuery .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
-			}	
+			}*/
 			$result = mysqli_query($this->dbConnect, $sqlQuery);
 			$numRows = mysqli_num_rows($result);
 			
@@ -742,7 +744,6 @@ class School extends Dbconfig {
 				$studentRows = array();			
 				$studentRows[] = $student['id'];
 				$studentRows[] = $student['admission_no'];
-				$studentRows[] = $student['roll_no'];
 				$studentRows[] = $student['name'];	
 				$studentRows[] = '
 				<input type="radio" id="attendencetype1_'.$student['id'].'" value="1" name="attendencetype_'.$student['id'].'" autocomplete="off" '.$checked['1'].'>

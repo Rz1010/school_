@@ -12,7 +12,7 @@ include('inc/header.php');
 <script src="js/sections.js"></script>
 <?php include('inc/container.php');?>
 <div class="container">	
-	<?php include('side-menu2.php');	?>
+	<?php include('side-menu.php');	?>
 	<div class="content">
 		<div class="container-fluid">
 			<div>   

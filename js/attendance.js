@@ -24,7 +24,10 @@ $(document).ready(function(){
 				"order":[],
 				"ajax":{
 					url:"action.php",
-					type:"POST",				
+					type:"POST",	
+					error: function(jqXHR, ajaxOptions, thrownError) {
+                  alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },			
 					data:{classid:classid, sectionid:sectionid, action:'getStudents'},
 					dataType:"json"
 				},
