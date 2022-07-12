@@ -395,6 +395,45 @@ class School extends Dbconfig {
 		);
 		echo json_encode($output);
 	}
+
+	public function listSectionsSpecial(){		
+		$id = $_SESSION["teacherUserid"];
+		$sqlQuery = "SELECT s.section_id, s.section , s.assigned_teacher_id , t.teacher_id, t.teacher
+			FROM ".$this->sectionsTable." as s 
+			
+			LEFT JOIN ".$this->teacherTable." as t ON s.assigned_teacher_id = t.teacher_id where assigned_teacher_id=".$id;
+		/*if(!empty($_POST["search"]["value"])){
+			$sqlQuery .= ' WHERE (s.section_id LIKE "%'.$_POST["search"]["value"].'%" ';
+			$sqlQuery .= ' OR s.section LIKE "%'.$_POST["search"]["value"].'%" ';					
+		}
+		if(!empty($_POST["order"])){
+			$sqlQuery .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
+		} else {
+			$sqlQuery .= 'ORDER BY s.section_id DESC ';
+		}
+		if($_POST["length"] != -1){
+			$sqlQuery .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+		}*/
+		$result = mysqli_query($this->dbConnect, $sqlQuery);
+		$numRows = mysqli_num_rows($result);
+		$sectionData = array();	
+		while( $section = mysqli_fetch_assoc($result) ) {		
+			$sectionRows = array();			
+			$sectionRows[] = $section['section_id'];
+			$sectionRows[] = $section['section'];				
+			$sectionRows[] = '<button type="button" name="update" id="'.$section["section_id"].'" class="btn btn-warning btn-xs update">Update</button>';
+			$sectionRows[] = '<button type="button" name="delete" id="'.$section["section_id"].'" class="btn btn-danger btn-xs delete" >Delete</button>';
+			$sectionData[] = $sectionRows;
+		}
+		$output = array(
+			"draw"				=>	intval($_POST["draw"]),
+			"recordsTotal"  	=>  $numRows,
+			"recordsFiltered" 	=> 	$numRows,
+			"data"    			=> 	$sectionData
+		);
+		echo json_encode($output);
+	}
+
 	public function addSection () {
 		if($_POST["section_name"]) {
 			$insertQuery = "INSERT INTO ".$this->sectionsTable."(section) 
@@ -533,6 +572,53 @@ class School extends Dbconfig {
 		if($_POST["length"] != -1){
 			$sqlQuery .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
 		}	
+		$result = mysqli_query($this->dbConnect, $sqlQuery);
+		$numRows = mysqli_num_rows($result);
+		$subjectData = array();	
+		while( $subject = mysqli_fetch_assoc($result) ) {		
+			$subjectRows = array();			
+			$subjectRows[] = $subject['subject_id'];
+			$subjectRows[] = $subject['subject'];	
+			$subjectRows[] = $subject['code'];	
+			$subjectRows[] = $subject['section'];				
+			$subjectRows[] = '<button type="button" name="update" id="'.$subject["subject_id"].'" class="btn btn-warning btn-xs update">Update</button>';
+			$subjectRows[] = '<button type="button" name="delete" id="'.$subject["subject_id"].'" class="btn btn-danger btn-xs delete" >Delete</button>';
+			$subjectData[] = $subjectRows;
+		}
+		$output = array(
+			"draw"				=>	intval($_POST["draw"]),
+			"recordsTotal"  	=>  $numRows,
+			"recordsFiltered" 	=> 	$numRows,
+			"data"    			=> 	$subjectData
+		);
+		echo json_encode($output);
+	}
+
+	public function listSubjectSpecial(){	
+		$id2 = $_SESSION["teacherUserid"];	
+		$sqlQuery = "SELECT se.subject_id, se.subject, se.code, s.section , s.section_id, s.assigned_teacher_id
+			FROM ".$this->subjectsTable." as se
+			
+			LEFT JOIN ".$this->sectionsTable." as s ON s.section_id = se.section_id where s.assigned_teacher_id= ".$id2;
+			
+			
+
+	
+		
+		/*if(!empty($_POST["search"]["value"])){
+			$sqlQuery .= ' WHERE (subject_id LIKE "%'.$_POST["search"]["value"].'%" ';
+			$sqlQuery .= ' OR subject LIKE "%'.$_POST["search"]["value"].'%" ';	
+			$sqlQuery .= ' OR type LIKE "%'.$_POST["search"]["value"].'%" ';	
+			$sqlQuery .= ' OR code LIKE "%'.$_POST["search"]["value"].'%" ';				
+		}
+		if(!empty($_POST["order"])){
+			$sqlQuery .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
+		} else {
+			$sqlQuery .= 'ORDER BY subject_id DESC ';
+		}
+		if($_POST["length"] != -1){
+			$sqlQuery .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+		}*/	
 		$result = mysqli_query($this->dbConnect, $sqlQuery);
 		$numRows = mysqli_num_rows($result);
 		$subjectData = array();	

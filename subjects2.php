@@ -9,7 +9,7 @@ include('inc/header.php');
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/dataTables.bootstrap.min.js"></script>		
 <link rel="stylesheet" href="css/dataTables.bootstrap.min.css" />
-<script src="js/subjects.js"></script>
+<script src="js/subjects2.js"></script>
 <?php include('inc/container.php');?>
 <div class="container">	
 	<?php include('side-menu2.php');	?>
@@ -19,16 +19,7 @@ include('inc/header.php');
 				<a href="#"><strong><span class="ti-crown"></span> Subjects Section</strong></a>
 
 				<hr>		
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-md-10">
-							<h3 class="panel-title"></h3>
-						</div>
-						<div class="col-md-2" align="right">
-							<button type="button" name="add" id="addSubject" class="btn btn-success btn-xs">Add New Subject</button>
-						</div>
-					</div>
-				</div>
+				
 				<table id="subjectList" class="table table-bordered table-striped">
 					<thead>
 						<tr>

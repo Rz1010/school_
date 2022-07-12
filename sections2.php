@@ -9,7 +9,7 @@ include('inc/header.php');
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/dataTables.bootstrap.min.js"></script>		
 <link rel="stylesheet" href="css/dataTables.bootstrap.min.css" />
-<script src="js/sections.js"></script>
+<script src="js/sections2.js"></script>
 <?php include('inc/container.php');?>
 <div class="container">	
 	<?php include('side-menu2.php');	?>
@@ -18,22 +18,11 @@ include('inc/header.php');
 			<div>   
 				<a href="#"><strong><span class="ti-crown"></span> Classes Section</strong></a>
 				<hr>		
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-md-10">
-							<h3 class="panel-title"></h3>
-						</div>
-						<div class="col-md-2" align="right">
-							<button type="button" name="add" id="addSection" class="btn btn-success btn-xs">Add New Section</button>
-						</div>
-					</div>
-				</div>
 				<table id="sectionList" class="table table-bordered table-striped">
 					<thead>
 						<tr>
 							<th>ID</th>
-							<th>Name</th>
-							<th>Assigned Teacher</th>										
+							<th>Assigned Subject</th>				
 							<th></th>
 							<th></th>							
 						</tr>

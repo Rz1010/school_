@@ -19,12 +19,6 @@
                         <p>Student</p>
                     </a>
                 </li>
-                <li id="classes">
-                    <a href="classes2.php" class="menu-link">
-                        <i class="ti-crown"></i>
-                        <p>Classes</p>
-                    </a>
-                </li>
 				<li id="sections">
                     <a href="sections2.php" class="menu-link">
                         <i class="ti-crown"></i>

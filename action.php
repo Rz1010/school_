@@ -39,6 +39,9 @@ if(!empty($_POST['action']) && $_POST['action'] == 'deleteStudent') {
 if(!empty($_POST['action']) && $_POST['action'] == 'listSections') {
 	$school->listSections();
 }
+if(!empty($_POST['action']) && $_POST['action'] == 'listSectionsSpecial') {
+	$school->listSectionsSpecial();
+}
 if(!empty($_POST['action']) && $_POST['action'] == 'addSection') {
 	$school->addSection();
 }
@@ -70,6 +73,9 @@ if(!empty($_POST['action']) && $_POST['action'] == 'deleteTeacher') {
 /********Subject********/
 if(!empty($_POST['action']) && $_POST['action'] == 'listSubject') {
 	$school->listSubject();
+}
+if(!empty($_POST['action']) && $_POST['action'] == 'listSubjectSpecial') {
+	$school->listSubjectSpecial();
 }
 if(!empty($_POST['action']) && $_POST['action'] == 'addSubject') {
 	$school->addSubject();

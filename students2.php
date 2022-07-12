@@ -18,16 +18,7 @@ include('inc/header.php');
 			<div>   
 				<a href="#"><strong><span class="ti-crown"></span> Student Section</strong></a>
 				<hr>		
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-md-10">
-							<h3 class="panel-title"></h3>
-						</div>
-						<div class="col-md-2" align="right">
-							<button type="button" name="add" id="addStudent" class="btn btn-success btn-xs">Student Admission</button>
-						</div>
-					</div>
-				</div>
+				
 				<table id="studentList" class="table table-bordered table-striped">
 					<thead>
 						<tr>
