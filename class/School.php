@@ -28,7 +28,7 @@ class School extends Dbconfig {
             $this -> password = $database ->password;
 			$this -> dbName = $database -> dbName;			
 #this is fatel please check permissions before publishing
-            $conn = new mysqli($this->hostName, "rz", "Hellfire000@", "webdamn_demos");
+            $conn = new mysqli($this->hostName, "rz", "Hellfire000@", "school");
             if($conn->connect_error){
                 die("Error failed to connect to MySQL: " . $conn->connect_error);
             } else{
