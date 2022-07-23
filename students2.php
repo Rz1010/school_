@@ -26,8 +26,7 @@ include('inc/header.php');
 							<th>Reg No</th>	
 							<th>Name</th>
 							<th>Photo</th>						
-							<th></th>
-							<th></th>							
+														
 						</tr>
 					</thead>
 				</table>

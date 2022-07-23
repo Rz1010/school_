@@ -28,8 +28,7 @@ include('inc/header.php');
 								
 							<th>Code</th>
 							<th>Assigned Section</th>							
-							<th></th>
-							<th></th>							
+
 						</tr>
 					</thead>
 				</table>

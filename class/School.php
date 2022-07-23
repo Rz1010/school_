@@ -341,7 +341,7 @@ class School extends Dbconfig {
 		$result = mysqli_query($this->dbConnect, $sqlQuery);	
 		$classHTML = '';
 		while( $class = mysqli_fetch_assoc($result)) {
-			$classHTML .= '<option value="'.$class["id"].'">'.$class["subject"].'</option>';	
+			$classHTML .= '<option value="'.$class["subject_id"].'">'.$class["subject"].'</option>';	
 		}
 		return $classHTML;
 	}
@@ -352,7 +352,7 @@ class School extends Dbconfig {
 		$result = mysqli_query($this->dbConnect, $sqlQuery);	
 		$classHTML = '';
 		while( $class = mysqli_fetch_assoc($result)) {
-			$classHTML .= '<option value="'.$class["id"].'">'.$class["subject"].'</option>';	
+			$classHTML .= '<option value="'.$class["subject_id"].'">'.$class["subject"].'</option>';	
 		}
 		
 		return $classHTML;
@@ -704,7 +704,7 @@ class School extends Dbconfig {
 				LEFT JOIN ".$this->enrolls_in." as w ON s.id = w.student_id
 				LEFT JOIN ".$this->sectionsTable." as se ON w.section_id = se.section_id
 				WHERE se.class_id = '".$_POST["classid"]."' AND w.section_id='".$_POST["sectionid"]."' $query ";
-			$sqlQuery .= "GROUP BY a.student_id ";	
+		
 			/*if(!empty($_POST["search"]["value"])){
 				$sqlQuery .= ' AND (s.id LIKE "%'.$_POST["search"]["value"].'%" ';
 				$sqlQuery .= ' OR s.name LIKE "%'.$_POST["search"]["value"].'%" ';
@@ -728,18 +728,13 @@ class School extends Dbconfig {
 				$checked = array();
 				$checked[1] = '';
 				$checked[2] = '';
-				$checked[3] = '';
-				$checked[4] = '';
+				
 				if($student['attendance_date'] == $attendanceDate) {
 					if($student['attendance_status'] == '1') {
 						$checked[1] = 'checked';
 					} else if($student['attendance_status'] == '2') {
 						$checked[2] = 'checked';
-					} else if($student['attendance_status'] == '3') {
-						$checked[3] = 'checked';
-					} else if($student['attendance_status'] == '4') {
-						$checked[4] = 'checked';
-					}	
+					} 	
 				}				
 				$studentRows = array();			
 				$studentRows[] = $student['id'];
@@ -749,7 +744,7 @@ class School extends Dbconfig {
 				<input type="radio" id="attendencetype1_'.$student['id'].'" value="1" name="attendencetype_'.$student['id'].'" autocomplete="off" '.$checked['1'].'>
 				<label for="attendencetype_'.$student['id'].'">Present</label>
 				
-				<input type="radio" id="attendencetype3_'.$student['id'].'" value="3" name="attendencetype_'.$student['id'].'" autocomplete="off" '.$checked['3'].'>
+				<input type="radio" id="attendencetype3_'.$student['id'].'" value="2" name="attendencetype_'.$student['id'].'" autocomplete="off" '.$checked['2'].'>
 				<label for="attendencetype3_'.$student['id'].'"> Absent </label>';
 
 				
@@ -766,11 +761,101 @@ class School extends Dbconfig {
 			
 		}
 	}
+
+
+
+	public function getStudentsSpecial(){	
+		
+		if($_POST["classid"] && $_POST["sectionid"] && $_POST["subjectid"] ) {
+			$attendanceYear = date('Y'); 
+			$attendanceMonth = date('m'); 
+			$attendanceDay = date('d'); 
+			$attendanceDate = $attendanceYear."/".$attendanceMonth."/".$attendanceDay;	
+			
+			$sqlQueryCheck = "SELECT * FROM ".$this->attendanceTable." 
+				WHERE class_id = '".$_POST["classid"]."' AND section_id = '".$_POST["sectionid"]."' AND subjectid = '".$_POST["subjectid"]."' AND attendance_date = '".$attendanceDate."'";	
+			$resultAttendance = mysqli_query($this->dbConnect, $sqlQueryCheck);	
+			$attendanceDone = mysqli_num_rows($resultAttendance);
+			
+			$query = '';
+			if($attendanceDone) {
+				$query = "AND a.attendance_date = '".$attendanceDate."'";
+			}
+		
+			$sqlQuery = "SELECT s.id, s.name, s.photo, s.gender, s.dob, s.mobile, s.email, s.current_address, s.father_name, s.mother_name,s.admission_no, s.roll_no, s.admission_date, s.academic_year, a.attendance_status, a.attendance_date,a.student_id,a.subjectid,w.student_id,w.section_id,se.section_id,se.class_id
+				FROM ".$this->studentTable." as s
+				LEFT JOIN ".$this->attendanceTable." as a ON s.id = a.student_id
+				LEFT JOIN ".$this->enrolls_in." as w ON s.id = w.student_id
+				LEFT JOIN ".$this->sectionsTable." as se ON w.section_id = se.section_id
+				WHERE se.class_id = '".$_POST["classid"]."' AND w.section_id='".$_POST["sectionid"]."' AND a.subjectid='".$_POST["subjectid"]."' $query ";
+			
+			/*if(!empty($_POST["search"]["value"])){
+				$sqlQuery .= ' AND (s.id LIKE "%'.$_POST["search"]["value"].'%" ';
+				$sqlQuery .= ' OR s.name LIKE "%'.$_POST["search"]["value"].'%" ';
+				$sqlQuery .= ' OR s.admission_no LIKE "%'.$_POST["search"]["value"].'%" ';	
+				$sqlQuery .= ' OR s.roll_no LIKE "%'.$_POST["search"]["value"].'%" )';			
+			}
+			if(!empty($_POST["order"])){
+				$sqlQuery .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
+			} else {
+				$sqlQuery .= 'ORDER BY s.id DESC ';
+			}
+			if($_POST["length"] != -1){
+				$sqlQuery .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+			}*/
+			$result = mysqli_query($this->dbConnect, $sqlQuery);
+			$numRows = mysqli_num_rows($result);
+			
+			$studentData = array();	
+			
+			while($student = mysqli_fetch_assoc($result) ) {	
+				$checked = array();
+				$checked[1] = '';
+				$checked[2] = '';
+				if($student['attendance_date'] == $attendanceDate) {
+					if($student['attendance_status'] == '1') {
+						$checked[1] = 'checked';
+					} else if($student['attendance_status'] == '2') {
+						$checked[2] = 'checked';
+					} 	
+				}				
+				$studentRows = array();			
+				$studentRows[] = $student['id'];
+				$studentRows[] = $student['admission_no'];
+				$studentRows[] = $student['name'];
+				
+	
+				$studentRows[] = '
+				<input type="radio" id="attendencetype1_'.$student['id'].'" value="1" name="attendencetype_'.$student['id'].'" autocomplete="off" '.$checked['1'].'>
+				<label for="attendencetype1_'.$student['id'].'">Present</label>
+				
+				<input type="radio" id="attendencetype3_'.$student['id'].'" value="2" name="attendencetype_'.$student['id'].'" autocomplete="off" '.$checked['2'].'>
+				<label for="attendencetype3_'.$student['id'].'"> Absent </label>';
+
+				$studentRows[] = '<input type="text" id="grades_'.$student['id'].'" name="grades_'.$student['id'].'">';
+				$studentData[] = $studentRows;
+			}
+			
+			$output = array(
+				"draw"				=>	intval($_POST["draw"]),
+				"recordsTotal"  	=>  $numRows,
+				"recordsFiltered" 	=> 	$numRows,
+				"data"    			=> 	$studentData
+			);
+			echo json_encode($output);
+			
+		}
+	}
+
+
 	public function updateAttendance(){	
 		$attendanceYear = date('Y'); 
 		$attendanceMonth = date('m'); 
 		$attendanceDay = date('d'); 
-		$attendanceDate = $attendanceYear."/".$attendanceMonth."/".$attendanceDay;		
+		$attendanceDate = $attendanceYear."/".$attendanceMonth."/".$attendanceDay;
+		$attendanceHour = date('H');
+		$attendanceMinute = date('i');
+		$attendanceTime = $attendanceHour.":".$attendanceMinute;		
 		$sqlQuery = "SELECT * FROM ".$this->attendanceTable." 
 			WHERE class_id = '".$_POST["att_classid"]."' AND section_id = '".$_POST["att_sectionid"]."' AND attendance_date = '".$attendanceDate."'";	
 		$result = mysqli_query($this->dbConnect, $sqlQuery);	
@@ -794,8 +879,8 @@ class School extends Dbconfig {
 					$student_id = str_replace("attendencetype_","", $key);
 					$attendanceStatus = $value;					
 					if($student_id) {
-						$insertQuery = "INSERT INTO ".$this->attendanceTable."(student_id, class_id, section_id, attendance_status, attendance_date) 
-						VALUES ('".$student_id."', '".$_POST["att_classid"]."', '".$_POST["att_sectionid"]."', '".$attendanceStatus."', '".$attendanceDate."')";
+						$insertQuery = "INSERT INTO ".$this->attendanceTable."(student_id, class_id, section_id, attendance_status, attendance_date, attendance_hour,grade) 
+						VALUES ('".$student_id."', '".$_POST["att_classid"]."', '".$_POST["att_sectionid"]."', '".$attendanceStatus."', '".$attendanceDate."', '".$attendanceTime."', 0)";
 						mysqli_query($this->dbConnect, $insertQuery);
 					}
 				}
@@ -804,7 +889,83 @@ class School extends Dbconfig {
 			echo "Attendance save successfully!";
 		}	
 	}
+
+
+	public function updateAttendanceSpecial(){	
+		$attendanceYear = date('Y'); 
+		$attendanceMonth = date('m'); 
+		$attendanceDay = date('d'); 
+		$attendanceDate = $attendanceYear."/".$attendanceMonth."/".$attendanceDay;
+		$attendanceHour = date('H');
+		$attendanceMinute = date('i');
+		$attendanceTime = $attendanceHour.":".$attendanceMinute;		
+		$sqlQuery = "SELECT * FROM ".$this->attendanceTable." 
+			WHERE class_id = '".$_POST["att_classid"]."' AND section_id = '".$_POST["att_sectionid"]."' AND subjectid = '".$_POST["att_subjectid"]."' AND attendance_date = '".$attendanceDate."'";	
+		$result = mysqli_query($this->dbConnect, $sqlQuery);	
+		$attendanceDone = mysqli_num_rows($result);
+		if($attendanceDone) {
+			foreach($_POST as $key => $value) {				
+				if (strpos($key, "attendencetype_") !== false) {
+					$student_id = str_replace("attendencetype_","", $key);
+					$attendanceStatus = $value;					
+					if($student_id) {
+						$updateQuery = "UPDATE ".$this->attendanceTable." SET attendance_status = '".$attendanceStatus."'
+						WHERE student_id = '".$student_id."' AND class_id = '".$_POST["att_classid"]."' AND section_id = '".$_POST["att_sectionid"]."' AND subjectid = '".$_POST["att_subjectid"]."' AND attendance_date = '".$attendanceDate."'";
+						mysqli_query($this->dbConnect, $updateQuery);
+					}
+				}
+				
+				if (strpos($key, "grades_") !== false) {
+					$student_id = str_replace("grades_","", $key);
+					$grade = $value;					
+					if($student_id) {
+						$updateQuery = "UPDATE ".$this->attendanceTable." SET grade = '".$grade."'
+						WHERE student_id = '".$student_id."' AND class_id = '".$_POST["att_classid"]."' AND section_id = '".$_POST["att_sectionid"]."' AND subjectid = '".$_POST["att_subjectid"]."' AND attendance_date = '".$attendanceDate."'";
+						mysqli_query($this->dbConnect, $updateQuery);
+					}
+				}			
+			}	
+			echo "Attendance updated successfully!";			
+		} else {
+			$check1=false;
+			$check2=false;
+			foreach($_POST as $key => $value) {	
+				
+				if (strpos($key, "attendencetype_") !== false) {
+					$student_id = str_replace("attendencetype_","", $key);
+					$attendanceStatus = $value;
+					$check1=true;
+						}
+				if (strpos($key, "grades_") !== false) {
+					$student_id = str_replace("grades_","", $key);
+					$grade = $value;
+					$check2=true;
+					}
+									
+				if($student_id && $check1 && $check2) {
+#echo "<p>".$student_id."</p><br>";
+#echo "<p>".$_POST["att_classid"]."</p><br>";
+#echo "<p>".$_POST["att_sectionid"]."</p><br>";
+#echo "<p>".$_POST["att_subjectid"]."</p><br>";
+#echo "<p>".$attendanceStatus."</p><br>";
+#echo "<p>".$attendanceDate."</p><br>";
+#echo "<p>".$attendanceTime."</p><br>";
+#echo "<p>".$grade."</p><br>";				
+						$insertQuery = "INSERT INTO ".$this->attendanceTable."(student_id, class_id, section_id,subjectid , attendance_status, attendance_date, attendance_hour,grade) 
+						VALUES ('".$student_id."', '".$_POST["att_classid"]."', '".$_POST["att_sectionid"]."','".$_POST["att_subjectid"]."','".$attendanceStatus."', '".$attendanceDate."', '".$attendanceTime."', '".$grade."')";
+						mysqli_query($this->dbConnect, $insertQuery);
+						$check1=false;
+						$check2=false;
+					
+				}
+				
+			}
+			echo "Attendance save successfully!";
+		}	
+	}
+
 	public function attendanceStatus(){	
+		
 		$attendanceYear = date('Y'); 
 		$attendanceMonth = date('m'); 
 		$attendanceDay = date('d'); 
@@ -817,6 +978,21 @@ class School extends Dbconfig {
 			echo "Attendance already submitted!";
 		} 
 	}
+
+	public function attendanceStatusSpecial(){	
+		$attendanceYear = date('Y'); 
+		$attendanceMonth = date('m'); 
+		$attendanceDay = date('d'); 
+		$attendanceDate = $attendanceYear."/".$attendanceMonth."/".$attendanceDay;		
+		$sqlQuery = "SELECT * FROM ".$this->attendanceTable." 
+			WHERE class_id = '".$_POST["classid"]."' AND section_id = '".$_POST["sectionid"]."' AND subjectid = '".$_POST["subjectid"]."' AND attendance_date = '".$attendanceDate."'";	
+		$result = mysqli_query($this->dbConnect, $sqlQuery);	
+		$attendanceDone = mysqli_num_rows($result);
+		if($attendanceDone) {
+			echo "Attendance already submitted!";
+		} 
+	}
+
 	public function getStudentsAttendance(){		
 		if($_POST["classid"] && $_POST["sectionid"] && $_POST["attendanceDate"]) {
 			$sqlQuery = "SELECT s.id, s.name, s.photo, s.gender, s.dob, s.mobile, s.email, s.current_address, s.father_name, s.mother_name,s.admission_no, s.roll_no, s.admission_date, s.academic_year, a.attendance_status
@@ -849,11 +1025,8 @@ class School extends Dbconfig {
 					$attendance = '<small class="label label-success">Present</small>';
 				} else if($student['attendance_status'] == '2') {
 					$attendance = '<small class="label label-warning">Late</small>';
-				} else if($student['attendance_status'] == '3') {
-					$attendance = '<small class="label label-danger">Absent</small>';
-				} else if($student['attendance_status'] == '4') {
-					$attendance = '<small class="label label-info">Half Day</small>';
-				}				
+				} 
+				
 				$studentRows = array();			
 				$studentRows[] = $student['id'];
 				$studentRows[] = $student['admission_no'];

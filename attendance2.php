@@ -9,7 +9,7 @@ include('inc/header.php');
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/dataTables.bootstrap.min.js"></script>		
 <link rel="stylesheet" href="css/dataTables.bootstrap.min.css" />
-<script src="js/attendance.js"></script>
+<script src="js/attendance2.js"></script>
 <style>
 .dataTables_filter {
 display: none; 
@@ -57,7 +57,7 @@ display: none;
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Subject</label><small class="req"> *</small>
-											<select id="classid" name="subjectid" class="form-control" required>
+											<select id="subjectid" name="subjectid" class="form-control" required>
 												<option value="">Select</option>
 												<?php echo $school->subjectListerSpecial(); ?>												
 											</select>
@@ -83,13 +83,14 @@ display: none;
 								<th>Reg No</th>	
 								<th>Name</th>
 								<th>Attendance</th>
-																					
+								<th>Grade</th>											
 							</tr>
 						</thead>
 					</table>
-					<input type="hidden" name="action" id="action" value="updateAttendance" />
+					<input type="hidden" name="action" id="action" value="updateAttendanceSpecial" />
 					<input type="hidden" name="att_classid" id="att_classid" value="" />
 					<input type="hidden" name="att_sectionid" id="att_sectionid" value="" />
+					<input type="hidden" name="att_subjectid" id="att_subjectid" value="" />
 				</form>
 			</div>					
 	</div>	                                

@@ -11,12 +11,7 @@ $(document).ready(function(){
 			data:{action:'listSectionsSpecial'},
 			dataType:"json"
 		},
-		"columnDefs":[
-			{
-				"targets":[0,2,3],
-				"orderable":false,
-			},
-		],
+		
 		"pageLength": 10
 	});	
 
@@ -45,41 +40,6 @@ $(document).ready(function(){
 		})
 	});	
 	
-	$(document).on('click', '.update', function(){
-		var sectionid = $(this).attr("id");
-		var action = 'getSection';
-		$.ajax({
-			url:'action.php',
-			method:"POST",
-			data:{sectionid:sectionid, action:action},
-			dataType:"json",
-			success:function(data){
-				$('#sectionModal').modal('show');
-				$('#sectionid').val(data.section_id);
-				$('#section_name').val(data.section);
-				$('.modal-title').html("<i class='fa fa-plus'></i> Edit Section");
-				$('#action').val('updateSection');
-				$('#save').val('Save');
-			}
-		})
-	});	
-	
-	$(document).on('click', '.delete', function(){
-		var sectionid = $(this).attr("id");		
-		var action = "deleteSection";
-		if(confirm("Are you sure you want to delete this Section?")) {
-			$.ajax({
-				url:"action.php",
-				method:"POST",
-				data:{sectionid:sectionid, action:action},
-				success:function(data) {					
-					sectionData.ajax.reload();
-				}
-			})
-		} else {
-			return false;
-		}
-	});	
 	
 	
 	

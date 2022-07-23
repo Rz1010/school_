@@ -83,6 +83,7 @@ display: none;
 								<th>Reg No</th>	
 								<th>Name</th>
 								<th>Attendance</th>
+								
 																					
 							</tr>
 						</thead>

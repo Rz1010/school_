@@ -23,8 +23,7 @@ include('inc/header.php');
 						<tr>
 							<th>ID</th>
 							<th>Assigned Subject</th>				
-							<th></th>
-							<th></th>							
+												
 						</tr>
 					</thead>
 				</table>

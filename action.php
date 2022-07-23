@@ -93,13 +93,25 @@ if(!empty($_POST['action']) && $_POST['action'] == 'deleteSubject') {
 if(!empty($_POST['action']) && $_POST['action'] == 'getStudents') {
 	$school->getStudents();
 }
+if(!empty($_POST['action']) && $_POST['action'] == 'getStudentsSpecial') {
+	$school->getStudentsSpecial();
+}
 if(!empty($_POST['action']) && $_POST['action'] == 'updateAttendance') {
 	$school->updateAttendance();
+}
+if(!empty($_POST['action']) && $_POST['action'] == 'updateAttendanceSpecial') {
+	$school->updateAttendanceSpecial();
 }
 if(!empty($_POST['action']) && $_POST['action'] == 'attendanceStatus') {
 	$school->attendanceStatus();
 }
+if(!empty($_POST['action']) && $_POST['action'] == 'attendanceStatusSpecial') {
+	$school->attendanceStatusSpecial();
+}
 if(!empty($_POST['action']) && $_POST['action'] == 'getStudentsAttendance') {
 	$school->getStudentsAttendance();
+}
+if(!empty($_POST['action']) && $_POST['action'] == 'subjectListerSpecial') {
+	$school->subjectListerSpecial();
 }
 ?>
